@@ -1,0 +1,7 @@
+CREATE DATABASE test;
+CREATE USER 'test'@'%' IDENTIFIED BY 'test';
+GRANT ALL PRIVILEGES ON test.* TO 'test'@'%';
+
+CREATE DATABASE dev;
+CREATE USER 'dev'@'%' IDENTIFIED BY 'dev';
+GRANT ALL PRIVILEGES ON dev.* TO 'dev'@'%';

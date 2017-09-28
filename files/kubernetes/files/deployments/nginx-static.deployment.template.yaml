@@ -1,0 +1,45 @@
+#this script is a template, the deploy script replaced the variables
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{PROJECTNAME}}-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{PROJECTNAME}}
+  template:
+    metadata:
+      labels:
+        app: {{PROJECTNAME}}
+    spec:
+      volumes: 
+      - name: www
+        emptyDir: {}
+      containers:
+      - image: {{PRIMARY_IMAGE}}
+        imagePullPolicy: IfNotPresent
+        name: {{PROJECTNAME}}
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 50m
+        terminationMessagePath: /dev/termination-log
+        volumeMounts:
+        - mountPath: /home/docker/app # this is where we will mount the code that will be served statically
+          name: www
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 50m
+        terminationMessagePath: /dev/termination-log
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: www
+          readOnly: true

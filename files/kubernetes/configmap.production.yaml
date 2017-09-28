@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{PROJECTNAME}}-config
+  namespace: default
+data:
+  env.name: production

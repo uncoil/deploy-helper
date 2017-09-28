@@ -1,0 +1,8 @@
+FROM google/cloud-sdk
+
+COPY docker/docker-ci-submodule/service.json /tmp/keyfile.json
+
+COPY docker/docker-ci-submodule/deploy_to_kubernetes.sh /deploy/deploy_to_kubernetes.sh
+COPY docker/docker-ci-submodule/templater.sh /deploy/templater.sh
+
+COPY package.json /deploy/package.json
