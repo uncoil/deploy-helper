@@ -7,7 +7,6 @@
     - {{PROJECTNAME}}_db
   volumes:
     - /home/app/node_modules
-  encrypted_env_file: docker/app.env.encrypted
   cached: true
   default_cache_branch: staging
 gcr_dockercfg:

@@ -1,11 +1,9 @@
 #!/bin/bash
 set -e
-export GOOGLE_APPLICATION_CREDENTIALS=/tmp/keyfile.json
 APP_NAME=$CI_REPO_NAME
-GOOGLE_CONTAINER_NAME=gcr.io/strawhouse-internals/$APP_NAME
-PROJECT_NAME=strawhouse-internals
+GOOGLE_CONTAINER_NAME=gcr.io/$GOOGLE_PROJECT_ID/$APP_NAME
+PROJECT_NAME=$GOOGLE_PROJECT_ID
 DEFAULT_ZONE=us-central1-a
-SERVICE_ACCOUNT_EMAIL=ci-522@strawhouse-internals.iam.gserviceaccount.com
 CLUSTER=$CI_BRANCH
 
 
@@ -13,8 +11,8 @@ echo 'setting project'
 gcloud config set project $PROJECT_NAME
 echo 'setting zone'
 gcloud config set compute/zone $DEFAULT_ZONE
-echo $GOOOGLE_APPLICATION_CREDENTIALS > /tmp/keyfile.json
-gcloud auth activate-service-account $SERVICE_ACCOUNT_EMAIL  --key-file /tmp/keyfile.json --project $PROJECT_NAME
+echo $GOOGLE_AUTH_JSON > /tmp/keyfile.json
+gcloud auth activate-service-account $GOOGLE_AUTH_EMAIL --key-file /tmp/keyfile.json --project $PROJECT_NAME
 
 echo 'setting cluster'
 gcloud config set container/cluster $CLUSTER

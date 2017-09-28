@@ -1,5 +1,4 @@
 FROM google/cloud-sdk
 
-
 COPY docker/deploy_helper/deploy_to_kubernetes.sh /deploy/deploy_to_kubernetes.sh
 COPY docker/deploy_helper/templater.sh /deploy/templater.sh
