@@ -1,2 +1,2 @@
 FROM mysql:5.7
-ADD docker/docker-ci-submodule/docker_db_setup.sql "/docker-entrypoint-initdb.d/setup.sql"
+ADD docker/deploy-helper/docker_db_setup.sql "/docker-entrypoint-initdb.d/setup.sql"

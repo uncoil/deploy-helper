@@ -15,7 +15,6 @@ RUN chown -R docker:docker $HOME/
 RUN mkdir -p /usr/local/share/.config/yarn
 RUN chown -R docker:docker /usr/local/share/.config/yarn
 
-ADD docker/docker-ci-submodule/id_github_deployment $HOME/.ssh/id_rsa
 RUN echo "Host github.com\n\tStrictHostKeyChecking no\n" >> $HOME/.ssh/config
 USER docker
 

@@ -1,7 +1,7 @@
 {{PROJECTNAME}}_app:
   build:
     image: app
-    dockerfile_path: docker/Dockerfile.app
+    dockerfile_path: docker/dockerfile.app
     build: .
   links:
     - {{PROJECTNAME}}_db
@@ -18,7 +18,7 @@ gcr_dockercfg:
 {{PROJECTNAME}}_db:
   build:
     image: mysql
-    dockerfile_path: docker/docker-ci-submodule/Dockerfile.mysql
+    dockerfile_path: docker/deploy-helper/Dockerfile.mysql
     build: .
   environment:
     MYSQL_ROOT_PASSWORD: root
@@ -26,7 +26,7 @@ gcr_dockercfg:
 googleclouddeployment:
   build:
     image: deploy
-    dockerfile_path: docker/docker-ci-submodule/Dockerfile.deploy
+    dockerfile_path: docker/deploy-helper/Dockerfile.deploy
     build: .
   encrypted_env_file: docker/gcp.env.encrypted
   # Add Docker if you want to interact with the Google Container Engine and Google Container Registry
