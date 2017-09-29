@@ -17,6 +17,26 @@ spec:
       - command:
         - npm
         - start
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
         env:
         - name: DB_SOCKET
           valueFrom:
