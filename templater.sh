@@ -125,6 +125,7 @@ if [[ "$print_only" == "true" ]]; then
     exit 0
 fi
 
+# allow us to pass strings with '*' character without globbing
 set -f
 # Replace all {{VAR}} by $VAR value
 for var in $vars; do
