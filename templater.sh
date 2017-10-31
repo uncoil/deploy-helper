@@ -143,4 +143,4 @@ done
 unset -f
 
 escaped_template_path=$(echo $template | sed 's/ /\\ /g')
-eval sed "$replaces" "$escaped_template_path"
+eval sed $replaces "$escaped_template_path"
