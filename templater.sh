@@ -125,6 +125,7 @@ if [[ "$print_only" == "true" ]]; then
     exit 0
 fi
 
+set -f
 # Replace all {{VAR}} by $VAR value
 for var in $vars; do
     value=`var_value $var`
@@ -138,6 +139,7 @@ for var in $vars; do
     value=$(echo "$value" | sed 's/\//\\\//g');
     replaces="-e 's/{{$var}}/${value}/g' $replaces"    
 done
+unset -f
 
 escaped_template_path=$(echo $template | sed 's/ /\\ /g')
-eval sed $replaces "$escaped_template_path"
+eval sed "$replaces" "$escaped_template_path"
