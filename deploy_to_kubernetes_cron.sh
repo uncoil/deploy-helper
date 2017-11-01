@@ -17,6 +17,7 @@ for command in "${!commands[@]}"; do
   export COMMAND="[${formatted_command}]"
   export NAME="edgar-ecomm-${split_command[1]}"
   export SCHEDULE="${commands[$command]}"
+  export PRIMARY_IMAGE="${PRIMARY_IMAGE}"
 
   /deploy/templater.sh ${JOB_TEMPLATE} > ${JOB_FILE}
   kubectl apply --record -f ${JOB_FILE}
