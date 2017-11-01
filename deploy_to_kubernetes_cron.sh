@@ -5,7 +5,7 @@ JOB_FILE="/deploy/kubernetes/cron.job.yaml"
 
 source /deploy/kubernetes/commands.sh && get_commands
 
-./kubernetes_deploy_base.sh
+/deploy/kubernetes_deploy_base.sh
 
 for command in "${!commands[@]}"; do
   split_command=($command)
