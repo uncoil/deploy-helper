@@ -4,6 +4,7 @@ JOB_TEMPLATE="/deploy/kubernetes/cron.job.template.yaml"
 JOB_FILE="/deploy/kubernetes/cron.job.yaml"
 
 source /deploy/kubernetes/commands.sh && get_commands
+source /deploy/kubernetes_deploy_base.sh
 
 /deploy/kubernetes_deploy_base.sh
 export PRIMARY_IMAGE="${PRIMARY_IMAGE}"
