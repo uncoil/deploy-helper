@@ -6,6 +6,7 @@ JOB_FILE="/deploy/kubernetes/cron.job.yaml"
 source /deploy/kubernetes/commands.sh && get_commands
 
 /deploy/kubernetes_deploy_base.sh
+export PRIMARY_IMAGE="${PRIMARY_IMAGE}"
 
 for command in "${!commands[@]}"; do
   split_command=($command)
@@ -17,7 +18,6 @@ for command in "${!commands[@]}"; do
   export COMMAND="[${formatted_command}]"
   export NAME="edgar-ecomm-${split_command[1]}"
   export SCHEDULE="${commands[$command]}"
-  export PRIMARY_IMAGE="${PRIMARY_IMAGE}"
 
   /deploy/templater.sh ${JOB_TEMPLATE} > ${JOB_FILE}
   kubectl apply --record -f ${JOB_FILE}
