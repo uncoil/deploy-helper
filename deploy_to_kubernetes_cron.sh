@@ -20,10 +20,10 @@ for command in "${!commands[@]}"; do
   export NAME="edgar-ecomm-${split_command[1]}"
   export SCHEDULE="${commands[$command]}"
 
-  echo COMMAND $COMMAND
-  echo NAME $NAME
-  echo SCHEDULE $SCHEDULE
-  echo IMAGE $IMAGE
+  echo COMMAND "$COMMAND"
+  echo NAME "$NAME"
+  echo SCHEDULE "$SCHEDULE"
+  echo PRIMARY_IMAGE "$PRIMARY_IMAGE"
 
   /deploy/templater.sh ${JOB_TEMPLATE} > ${JOB_FILE}
   kubectl apply --record -f ${JOB_FILE}
