@@ -16,9 +16,14 @@ for command in "${!commands[@]}"; do
     formatted_command="${formatted_command}, \"${i}\""
   done
 
+  if [ -z "${NAME}" ]; then
+    NAME="edgar-ecomm-${split_command[1]}"
+  fi
+
   export COMMAND="[${formatted_command}]"
-  export NAME="edgar-ecomm-${split_command[1]}"
   export SCHEDULE="${commands[$command]}"
+  export NAME="${NAME}"
+
 
   echo COMMAND "$COMMAND"
   echo NAME "$NAME"
