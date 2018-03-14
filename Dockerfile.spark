@@ -1,0 +1,22 @@
+FROM uncoil/spark-kubernetes:0.1
+
+RUN apk update && apk add wget tar python git
+
+ENV GOOGLE_APPLICATION_CREDENTIALS /etc/hadoop/conf/gcskey.json
+ENV HADOOP_CONF_DIR /etc/hadoop/conf
+ARG GCLOUD=/gcloud
+ENV PATH "${GCLOUD}/google-cloud-sdk/bin/:${PATH}"
+
+RUN mkdir ${GCLOUD}
+
+# so we can use gs:// to copy jars
+COPY docker/gcskey.json ${GCLOUD}
+COPY docker/deploy-helper/spark /deploy
+RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-191.0.0-linux-x86_64.tar.gz -O $GCLOUD/gcloud-sdk.tar.gz --quiet
+RUN tar -xf ${GCLOUD}/gcloud-sdk.tar.gz -C ${GCLOUD}
+RUN ${GCLOUD}/google-cloud-sdk/install.sh --quiet
+RUN gcloud auth activate-service-account --key-file ${GCLOUD}/gcskey.json
+
+COPY .git /git
+COPY deploy_conf /deploy/conf
+RUN /deploy/pull_artifact.sh
