@@ -29,7 +29,8 @@ gcloud container clusters get-credentials $CLUSTER
 IMAGE_TAG=${CI_COMMIT_ID}
 KUBERNETES_MASTER=k8s://https://35.184.11.111 # should be a map with staging/production keys
 
-kubectl get pods
+# clean up old job of the same name
+kubectl delete pod $(kubectl get pods | grep ${JOB_NAME} | awk '{print $1}')
 
 echo 'starting spark job'
 $SPARK_HOME/bin/spark-submit \
