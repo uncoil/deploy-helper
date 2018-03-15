@@ -18,5 +18,5 @@ RUN ${GCLOUD}/google-cloud-sdk/install.sh --quiet
 RUN gcloud auth activate-service-account --key-file ${GCLOUD}/gcskey.json
 
 COPY .git /git
-COPY deploy_conf /deploy/conf
+COPY deploy_conf.sh /deploy/conf
 RUN /deploy/pull_artifact.sh
