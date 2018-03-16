@@ -9,7 +9,7 @@
     - /home/app/node_modules
   cached: true
   default_cache_branch: staging
-gcr_dockercfg:
+gcr-dockercfg:
   image: codeship/gcr-dockercfg-generator
   add_docker: true
   encrypted_env_file: docker/gcp.env.encrypted
