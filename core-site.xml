@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <!-- From: https://cloud.google.com/dataproc/docs/concepts/connectors/install-storage-connector -->
+  <!-- Required properies: -->
+  <property>
+    <name>google.cloud.auth.service.account.enable</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>google.cloud.auth.service.account.json.keyfile</name>
+    <value>/etc/hadoop/conf/gcskey.json</value>
+  </property>
+  <property>
+    <name>fs.gs.impl</name>
+    <value>com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem</value>
+  </property>
+  <property>
+    <name>fs.AbstractFileSystem.gs.impl</name>
+    <value>com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem</value>
+  </property>
+  <property>
+    <name>fs.gs.project.id</name>
+    <value>uncoil-io</value>
+  </property>
+  <!-- Optional properies: -->
+  <property>
+    <name>fs.gs.system.bucket</name>
+    <value>uncoil-spark-dev</value> <!-- TODO: update this -->
+  </property>
+  <property>
+    <name>fs.gs.working.dir</name>
+    <value>/</value>
+</configuration>
