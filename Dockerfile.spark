@@ -2,8 +2,8 @@ FROM uncoil/spark-kubernetes:0.1
 
 RUN apk update && apk add wget tar python git
 
-ENV GOOGLE_APPLICATION_CREDENTIALS /etc/hadoop/conf/gcskey.json
-ENV HADOOP_CONF_DIR /etc/hadoop/conf
+ARG HADOOP_CONF_DIR=/etc/hadoop/conf
+ARG HADOOP_COMMON_LIB_JARS_DIR=/etc/hadoop/lib
 ARG GCLOUD=/gcloud
 ENV PATH "${GCLOUD}/google-cloud-sdk/bin/:${PATH}"
 
@@ -12,10 +12,17 @@ RUN mkdir ${GCLOUD}
 # so we can use gs:// to copy jars
 COPY docker/gcskey.json ${GCLOUD}
 COPY docker/deploy-helper/spark /deploy
-RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-191.0.0-linux-x86_64.tar.gz -O $GCLOUD/gcloud-sdk.tar.gz --quiet
+RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-191.0.0-linux-x86_64.tar.gz -O ${GCLOUD}/gcloud-sdk.tar.gz --quiet
 RUN tar -xf ${GCLOUD}/gcloud-sdk.tar.gz -C ${GCLOUD}
 RUN ${GCLOUD}/google-cloud-sdk/install.sh --quiet
 RUN gcloud auth activate-service-account --key-file ${GCLOUD}/gcskey.json
+
+# use gs:// as our spark app's filesystem
+COPY docker/gcskey.json ${HADOOP_CONF_DIR}
+COPY docker/core-site.xml ${HADOOP_CONF_DIR}
+RUN wget https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-latest-hadoop2.jar -O ${HADOOP_COMMON_LIB_JARS_DIR}/gcs-connector-latest-hadoop2.jar --quiet
+ENV HADOOP_CLASSPATH=${HADOOP_CLASSPATH}:${HADOOP_COMMON_LIB_JARS_DIR}/gcs-connector-latest-hadoop2.jar
+ENV HADOOP_CONF_DIR=${HADOOP_CONF_DIR}
 
 COPY .git /git
 COPY deploy_conf.sh /deploy/conf
