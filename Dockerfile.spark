@@ -8,6 +8,8 @@ ARG GCLOUD=/gcloud
 ENV PATH "${GCLOUD}/google-cloud-sdk/bin/:${PATH}"
 
 RUN mkdir ${GCLOUD}
+RUN mkdir -p ${HADOOP_COMMON_LIB_JARS_DIR}
+RUN mkdir -p ${HADOOP_CONF_DIR}
 
 # so we can use gs:// to copy jars
 COPY docker/gcskey.json ${GCLOUD}
