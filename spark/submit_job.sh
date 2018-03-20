@@ -32,7 +32,12 @@ KUBERNETES_MASTER=k8s://https://35.184.11.111 # should be a map with staging/pro
 # clean up old job of the same name
 # WARNING this grep is not smart, it will remove all jobs that contain JOB_NAME. This means
 # we do currently support having a job named `facebook-ads` alongside `facebook-ads-metrics`
+echo $JOB_NAME
+echo 1
+kubectl get pods
+echo 2
 kubectl delete pod $(kubectl get pods -a | grep ${JOB_NAME} | awk '{print $1}')
+echo 3
 
 echo 'starting spark job'
 $SPARK_HOME/bin/spark-submit \
