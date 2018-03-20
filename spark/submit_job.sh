@@ -32,12 +32,10 @@ KUBERNETES_MASTER=k8s://https://35.184.11.111 # should be a map with staging/pro
 # clean up old job of the same name
 # WARNING this grep is not smart, it will remove all jobs that contain JOB_NAME. This means
 # we do currently support having a job named `facebook-ads` alongside `facebook-ads-metrics`
-echo $JOB_NAME
-echo 1
-kubectl get pods
-echo 2
-kubectl delete pod $(kubectl get pods -a | grep ${JOB_NAME} | awk '{print $1}')
-echo 3
+pods=$(kubectl get pods -a -l jobName=${JOB_NAME} | awk '{print $1}')
+if [[ $pods ]]; then
+  kubectl delete pod $pods
+fi
 
 echo 'starting spark job'
 $SPARK_HOME/bin/spark-submit \
@@ -46,6 +44,7 @@ $SPARK_HOME/bin/spark-submit \
   --master ${KUBERNETES_MASTER} \
   --conf spark.kubernetes.submission.waitAppCompletion=false \
   --conf spark.executor.instances=${EXECUTOR_INSTANCES} \
+  --conf spark.kubernetes.driver.label.jobName=${JOB_NAME} \
   --conf spark.app.name=${JOB_NAME} \
   --conf spark.kubernetes.container.image=gcr.io/uncoil-io/spark-job-images/${JOB_NAME}:${IMAGE_TAG} \
   local:///opt/spark/work-dir/${JOB_NAME}.jar
