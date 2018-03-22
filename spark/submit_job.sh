@@ -31,7 +31,7 @@ KUBERNETES_MASTER=k8s://https://35.184.11.111 # should be a map with staging/pro
 
 # clean up old job with same label
 echo 'cleaning up old job'
-pods=$(kubectl get pods -a -l jobName=${JOB_NAME} | awk '{print $1}')
+pods=$(kubectl get pods -a -l jobName=${JOB_NAME} | grep -v 'NAME' | awk '{print $1}')
 echo $pods
 if [[ $pods ]]; then
   kubectl delete pod $pods
