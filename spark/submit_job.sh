@@ -37,11 +37,15 @@ if [[ $pods ]]; then
   kubectl delete pod $pods
 fi
 
+JAR_LIST=$(find local:///opt/spark/jars -n '*.jar' | paste -sd , -)
+echo "jars: $JAR_LIST"
+
 echo 'starting spark job'
 $SPARK_HOME/bin/spark-submit \
   --deploy-mode cluster \
   --class ${CLASS_NAME} \
   --master ${KUBERNETES_MASTER} \
+  --jars "$JAR_LIST" \
   --conf spark.kubernetes.submission.waitAppCompletion=false \
   --conf spark.executor.instances=${EXECUTOR_INSTANCES} \
   --conf spark.kubernetes.driver.label.jobName=${JOB_NAME} \
