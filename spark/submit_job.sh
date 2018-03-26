@@ -37,7 +37,7 @@ if [[ $pods ]]; then
   kubectl delete pod $pods
 fi
 
-JAR_LIST=$(find local:///opt/spark/jars -name '*.jar' | paste -sd , -)
+JAR_LIST=$(find /opt/spark/lib_managed -name '*.jar' | paste -sd , -)
 echo "jars: $JAR_LIST"
 
 echo 'starting spark job'
