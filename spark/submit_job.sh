@@ -55,5 +55,5 @@ $SPARK_HOME/bin/spark-submit \
   --conf spark.kubernetes.driver.label.jobName=${JOB_NAME} \
   --conf spark.app.name=${JOB_NAME} \
   --conf spark.kubernetes.container.image=gcr.io/uncoil-io/spark-job-images/${JOB_NAME}:${IMAGE_TAG} \
-  --conf spark.kubernetes.driverEnv.GOOGLE_APPLICATION_CREDENTIALS=/tmp/keyfile.json \
+  --conf spark.kubernetes.driverEnv.GOOGLE_APPLICATION_CREDENTIALS=local:///opt/spark/conf/gcskey.json \
   local:///opt/spark/work-dir/${JOB_NAME}.jar ${DATA_DIRECTORY}
