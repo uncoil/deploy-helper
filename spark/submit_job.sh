@@ -53,6 +53,9 @@ echo "submit_job /lib_managed/credentials $TEST9"
 JAR_LIST=$(find /lib_managed -name '*.jar' | while read line; do echo "local:///opt/spark$line"; done | paste -sd , -)
 echo "jars: $JAR_LIST"
 
+# TODO: testing
+JAR_LIST="$JAR_LIST,local:///etc/hadoop/lib/gcs-connector-latest-hadoop2.jar"
+
 echo 'starting spark job'
 $SPARK_HOME/bin/spark-submit \
   --deploy-mode cluster \
