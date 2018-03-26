@@ -7,6 +7,10 @@ source /deploy/conf
 
 ARTIFACT_TAG="$CI_COMMIT_ID"
 
+# TODO: testing
+TEST7=$(ls /)
+echo "publish_artifact / $TEST7"
+
 sbt package
 
 # compress the dependencies

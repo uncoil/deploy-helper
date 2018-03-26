@@ -40,13 +40,12 @@ fi
 # TODO: testing
 TEST4=$(ls /opt)
 echo "submit_job /opt $TEST4"
-TEST5=$(ls /opt/spark)
-echo "submit_job /opt/spark $TEST5"
-TEST6=$(ls /opt/spark/work-dir)
-echo "submit_job /opt/spark/work-dir $TEST6"
+TEST5=$(ls /)
+echo "submit_job / $TEST5"
+TEST6=$(ls /lib_managed)
+echo "submit_job /lib_managed $TEST6"
 
-
-JAR_LIST=$(find /opt/spark/lib_managed -name '*.jar' | paste -sd , -)
+JAR_LIST=$(find /lib_managed -name '*.jar' | paste -sd , -)
 echo "jars: $JAR_LIST"
 
 echo 'starting spark job'
