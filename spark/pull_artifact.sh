@@ -11,7 +11,7 @@ HASH=$(cd /git; git rev-parse ${BRANCH})
 gsutil cp gs://uncoil-artifacts/${JOB_NAME}/${JOB_NAME}:${HASH}.jar /opt/spark/work-dir/${JOB_NAME}.jar
 gsutil cp gs://uncoil-artifacts/${JOB_NAME}/${JOB_NAME}:${HASH}_dependencies.tar.gz /opt/spark/work-dir/lib_managed.tar.gz
 
-tar -xzvf /opt/spark/work-dir/lib_managed.tar.gz -C /opt/spark
+tar -xzf /opt/spark/work-dir/lib_managed.tar.gz -C /opt/spark
 rm /opt/spark/work-dir/lib_managed.tar.gz
 
 # TODO: testing

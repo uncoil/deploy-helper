@@ -10,11 +10,13 @@ ARTIFACT_TAG="$CI_COMMIT_ID"
 # TODO: testing
 TEST7=$(ls /)
 echo "publish_artifact / $TEST7"
+TEST8=$(ls /lib_managed)
+echo "publish_artifact /lib_managed $TEST8"
 
 sbt package
 
 # compress the dependencies
-tar -czvf lib_managed.tar.gz lib_managed
+tar -czf lib_managed.tar.gz lib_managed
 
 gcloud auth activate-service-account --key-file /deploy/gcskey.json
 
