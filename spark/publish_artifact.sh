@@ -15,6 +15,10 @@ echo "publish_artifact /lib_managed $TEST8"
 
 sbt package
 
+# TODO: testing
+TEST10=$(ls /lib_managed)
+echo "publish_artifact after package /lib_managed $TEST10"
+
 # compress the dependencies
 tar -czf lib_managed.tar.gz lib_managed
 

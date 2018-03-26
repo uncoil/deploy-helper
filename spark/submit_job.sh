@@ -44,8 +44,8 @@ TEST5=$(ls /)
 echo "submit_job / $TEST5"
 TEST6=$(ls /lib_managed)
 echo "submit_job /lib_managed $TEST6"
-TEST9=$(cat /lib_managed/credentials)
-echo "submit_job cat credentials: $TEST9"
+TEST9=$(ls /lib_managed/credentials)
+echo "submit_job /lib_managed/credentials $TEST9"
 
 JAR_LIST=$(find /lib_managed -name '*.jar' | paste -sd , -)
 echo "jars: $JAR_LIST"
