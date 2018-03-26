@@ -37,6 +37,15 @@ if [[ $pods ]]; then
   kubectl delete pod $pods
 fi
 
+# TODO: testing
+TEST4=$(ls /opt)
+echo "submit_job /opt $TEST4"
+TEST5=$(ls /opt/spark)
+echo "submit_job /opt/spark $TEST5"
+TEST6=$(ls /opt/spark/work-dir)
+echo "submit_job /opt/spark/work-dir $TEST6"
+
+
 JAR_LIST=$(find /opt/spark/lib_managed -name '*.jar' | paste -sd , -)
 echo "jars: $JAR_LIST"
 
