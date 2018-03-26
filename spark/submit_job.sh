@@ -50,7 +50,7 @@ echo "submit_job /lib_managed/credentials $TEST9"
 # TODO: change the paths from /lib_managed to local:///opt/spark/lib_managed
 
 # JAR_LIST=$(find /lib_managed -name '*.jar' | paste -sd , -)
-JAR_LIST=$(find /lib_managed -name '*.jar' | while read line; do echo "local:///opt/spark/$line"; done | paste -sd , -)
+JAR_LIST=$(find /lib_managed -name '*.jar' | while read line; do echo "local:///opt/spark$line"; done | paste -sd , -)
 echo "jars: $JAR_LIST"
 
 echo 'starting spark job'
