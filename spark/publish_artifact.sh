@@ -15,6 +15,9 @@ echo "publish_artifact /lib_managed $TEST8"
 
 sbt package
 
+# copy the depencencies into our docker host volume
+cp -r lib_managed/* /lib_managed
+
 # TODO: testing
 TEST10=$(ls /lib_managed)
 echo "publish_artifact after package /lib_managed $TEST10"
