@@ -37,19 +37,7 @@ if [[ $pods ]]; then
   kubectl delete pod $pods
 fi
 
-# TODO: testing
-TEST4=$(ls /opt)
-echo "submit_job /opt $TEST4"
-TEST5=$(ls /)
-echo "submit_job / $TEST5"
-TEST6=$(ls /lib_managed)
-echo "submit_job /lib_managed $TEST6"
-TEST9=$(ls /lib_managed/credentials)
-echo "submit_job /lib_managed/credentials $TEST9"
-
-# TODO: change the paths from /lib_managed to local:///opt/spark/lib_managed
-
-# JAR_LIST=$(find /lib_managed -name '*.jar' | paste -sd , -)
+# build a string of paths to all of the dependency jars.
 JAR_LIST=$(find /lib_managed -name '*.jar' | while read line; do echo "local:///opt/spark$line"; done | paste -sd , -)
 echo "jars: $JAR_LIST"
 
@@ -67,5 +55,5 @@ $SPARK_HOME/bin/spark-submit \
   --conf spark.kubernetes.driver.label.jobName=${JOB_NAME} \
   --conf spark.app.name=${JOB_NAME} \
   --conf spark.kubernetes.container.image=gcr.io/uncoil-io/spark-job-images/${JOB_NAME}:${IMAGE_TAG} \
-  --conf spark.kubernetes.driverEnv.GOOGLE_APPLICATION_CREDENTIALS=local:///opt/spark/conf/gcskey.json \
+  --conf spark.kubernetes.driverEnv.GOOGLE_APPLICATION_CREDENTIALS=/tmp/keyfile.json \
   local:///opt/spark/work-dir/${JOB_NAME}.jar ${DATA_DIRECTORY}
