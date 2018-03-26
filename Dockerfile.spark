@@ -4,6 +4,7 @@ RUN apk update && apk add wget tar python git
 
 ARG HADOOP_CONF_DIR=/etc/hadoop/conf
 ARG HADOOP_COMMON_LIB_JARS_DIR=/etc/hadoop/lib
+ARG SPARK_DIR=/opt/spark
 ARG GCLOUD=/gcloud
 ENV PATH "${GCLOUD}/google-cloud-sdk/bin/:${PATH}"
 
@@ -25,6 +26,10 @@ COPY docker/core-site.xml ${HADOOP_CONF_DIR}
 RUN wget https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-latest-hadoop2.jar -O ${HADOOP_COMMON_LIB_JARS_DIR}/gcs-connector-latest-hadoop2.jar --quiet
 ENV HADOOP_CLASSPATH=${HADOOP_CLASSPATH}:${HADOOP_COMMON_LIB_JARS_DIR}/gcs-connector-latest-hadoop2.jar
 ENV HADOOP_CONF_DIR=${HADOOP_CONF_DIR}
+
+# TODO: testing
+# trying this https://stackoverflow.com/a/27814118/562915
+COPY docker/core-site.xml ${SPARK_DIR}/conf
 
 COPY .git /git
 COPY deploy_conf.sh /deploy/conf
