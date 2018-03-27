@@ -7,20 +7,10 @@ source /deploy/conf
 
 ARTIFACT_TAG="$CI_COMMIT_ID"
 
-# TODO: testing
-TEST7=$(ls /)
-echo "publish_artifact / $TEST7"
-TEST8=$(ls /lib_managed)
-echo "publish_artifact /lib_managed $TEST8"
-
 sbt package
 
 # copy the depencencies into our docker host volume
 cp -r lib_managed/* /lib_managed
-
-# TODO: testing
-TEST10=$(ls /lib_managed)
-echo "publish_artifact after package /lib_managed $TEST10"
 
 # compress the dependencies
 tar -czf lib_managed.tar.gz lib_managed
