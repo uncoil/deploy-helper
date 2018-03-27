@@ -39,9 +39,9 @@ fi
 
 # build a string of paths to all of the dependency jars.
 JAR_LIST=$(find /lib_managed -name '*.jar' | while read line; do echo "local:///opt/spark$line"; done | paste -sd , -)
-echo "jars: $JAR_LIST"
 
-# TODO: testing
+# include the gcs hadoop connector in the jar list.
+# jar file was retrieved in Dockerfile.spark.
 JAR_LIST="$JAR_LIST,local:///etc/hadoop/lib/gcs-connector-latest-hadoop2.jar"
 
 echo 'starting spark job'
