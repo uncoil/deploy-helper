@@ -1,10 +1,11 @@
 #! /bin/bash
 JOB_TEMPLATE="/deploy/kubernetes/cron.job.template.yaml"
 JOB_FILE="/deploy/kubernetes/cron.job.yaml"
-JOB_NAME=$NAME
 
 source /deploy/kubernetes/commands.sh && get_commands
 source /deploy/kubernetes_deploy_base.sh
+
+JOB_NAME=$NAME
 
 /deploy/kubernetes_deploy_base.sh
 export PRIMARY_IMAGE="${PRIMARY_IMAGE}"
