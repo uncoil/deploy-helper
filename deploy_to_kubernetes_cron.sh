@@ -1,7 +1,7 @@
 #! /bin/bash
-
 JOB_TEMPLATE="/deploy/kubernetes/cron.job.template.yaml"
 JOB_FILE="/deploy/kubernetes/cron.job.yaml"
+JOB_NAME=$NAME
 
 source /deploy/kubernetes/commands.sh && get_commands
 source /deploy/kubernetes_deploy_base.sh
@@ -16,9 +16,7 @@ for command in "${!commands[@]}"; do
     formatted_command="${formatted_command}, \"${i}\""
   done
 
-  if [ -z "${NAME}" ]; then
-    NAME="edgar-ecomm-${split_command[1]}"
-  fi
+  NAME="$JOB_NAME-${split_command[2]}"
 
   export COMMAND="[${formatted_command}]"
   export SCHEDULE="${commands[$command]}"
