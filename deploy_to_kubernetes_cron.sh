@@ -21,7 +21,7 @@ for command in "${!commands[@]}"; do
 
   export COMMAND="[${formatted_command}]"
   export SCHEDULE="${commands[$command]}"
-  export NAME="${NAME}"
+  export NAME=$(echo $NAME | awk '{print tolower($0)}')
 
 
   echo COMMAND "$COMMAND"
