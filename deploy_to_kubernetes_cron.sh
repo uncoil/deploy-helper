@@ -29,7 +29,8 @@ for command in "${!commands[@]}"; do
   echo SCHEDULE "$SCHEDULE"
   echo PRIMARY_IMAGE "$PRIMARY_IMAGE"
 
-  kubectl delete cronjob $NAME
+  # Ignore exit code with pipe operator
+  kubectl delete cronjob $NAME || true
 
   /deploy/templater.sh ${JOB_TEMPLATE} > ${JOB_FILE}
   kubectl apply --record -f ${JOB_FILE}
