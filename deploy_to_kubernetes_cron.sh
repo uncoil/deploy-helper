@@ -1,35 +1,36 @@
 #! /bin/bash
-JOB_TEMPLATE="/deploy/kubernetes/cron.job.template.yaml"
-JOB_FILE="/deploy/kubernetes/cron.job.yaml"
 
+# NAME, commands
 source /deploy/kubernetes/commands.sh && get_commands
 source /deploy/kubernetes_deploy_base.sh
 
-JOB_NAME=$NAME
+JOB_TEMPLATE="/deploy/kubernetes/cron.job.template.yaml"
+TEMPORARY_JOB_FILE="/deploy/kubernetes/cron.job.yaml"
 
+# PRIMARY_IMAGE
 /deploy/kubernetes_deploy_base.sh
-export PRIMARY_IMAGE="${PRIMARY_IMAGE}"
 
+# `commands` are an associative array -- [COMMAND]=SCHEDULE
+
+# Get all keys, each as a new string: "${!commands[@]}" 
 for command in "${!commands[@]}"; do
+
+  # Split string into array of strings
   split_command=($command)
-  formatted_command=\"${split_command[0]}\"
-  for i in "${split_command[@]:1}"; do
-    formatted_command="${formatted_command}, \"${i}\""
-  done
 
-  NAME="$JOB_NAME-${split_command[2]}"
+  # Last item in command will be the name, cannot include slashes.
+  NAME="$NAME-${split_command[-1]}"
 
-  export COMMAND="[${formatted_command}]"
+  export COMMAND="[${command}]"
   export SCHEDULE="${commands[$command]}"
   export NAME=$(echo $NAME | awk '{print tolower($0)}')
-
 
   echo COMMAND "$COMMAND"
   echo NAME "$NAME"
   echo SCHEDULE "$SCHEDULE"
   echo PRIMARY_IMAGE "$PRIMARY_IMAGE"
 
-  /deploy/templater.sh ${JOB_TEMPLATE} > ${JOB_FILE}
-  kubectl apply --record -f ${JOB_FILE}
-  rm ${JOB_FILE}
+  /deploy/templater.sh ${JOB_TEMPLATE} > ${TEMPORARY_JOB_FILE}
+  kubectl apply --record -f ${TEMPORARY_JOB_FILE}
+  rm ${TEMPORARY_JOB_FILE}
 done
