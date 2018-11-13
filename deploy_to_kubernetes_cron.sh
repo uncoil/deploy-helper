@@ -18,7 +18,7 @@ for command in "${!commands[@]}"; do
   # Split string into array of strings
   split_command=($command)
 
-  # Last item in command will be the name, cannot include slashes.
+  # Name will include last item of command, cannot include slashes.
   NAME="$NAME-${split_command[-1]}"
 
   export COMMAND="[${command}]"
