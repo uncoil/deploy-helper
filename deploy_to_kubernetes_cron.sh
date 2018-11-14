@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# NAME, commands
+# NAME, `commands`
 source /deploy/kubernetes/commands.sh && get_commands
 source /deploy/kubernetes_deploy_base.sh
 
@@ -17,10 +17,10 @@ for command in "${!commands[@]}"; do
   # Split string into array of strings
   command_strings=($command)
 
-  # Start comma seperated values with first value
+  # Start comma seperated values with first value.
   command_csv="${command_strings[0]}"
   for i in "${split_command[@]:1}"; do
-    # Append new values with comma
+    # Append new values with comma.
     command_csv="${command_csv}, \"${i}\""
   done
 
