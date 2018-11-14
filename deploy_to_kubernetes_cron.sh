@@ -4,6 +4,7 @@
 source /deploy/kubernetes/commands.sh && get_commands
 source /deploy/kubernetes_deploy_base.sh
 
+JOB_NAME=$NAME
 JOB_TEMPLATE="/deploy/kubernetes/cron.job.template.yaml"
 TEMPORARY_JOB_FILE="/deploy/kubernetes/cron.job.temporary.yaml"
 
@@ -27,7 +28,7 @@ for command in "${!commands[@]}"; do
   done
 
   # Name will include last item of command, cannot include slashes.
-  NAME="$NAME-${command_strings[-1]}"
+  NAME="$JOB_NAME-${command_strings[-1]}"
 
   export COMMAND="[${command_csv}]"
   export SCHEDULE="${commands[$command]}"
