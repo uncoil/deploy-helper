@@ -5,7 +5,7 @@ source /deploy/kubernetes/commands.sh && get_commands
 source /deploy/kubernetes_deploy_base.sh
 
 JOB_TEMPLATE="/deploy/kubernetes/cron.job.template.yaml"
-TEMPORARY_JOB_FILE="/deploy/kubernetes/cron.job.yaml"
+TEMPORARY_JOB_FILE="/deploy/kubernetes/cron.job.temporary.yaml"
 
 # PRIMARY_IMAGE
 /deploy/kubernetes_deploy_base.sh
@@ -14,14 +14,20 @@ TEMPORARY_JOB_FILE="/deploy/kubernetes/cron.job.yaml"
 
 # Get all keys, each as a new string: "${!commands[@]}" 
 for command in "${!commands[@]}"; do
-
   # Split string into array of strings
-  split_command=($command)
+  command_strings=($command)
+
+  # Start comma seperated values with first value
+  command_csv=\"${command_strings[0]}\"
+  for i in "${split_command[@]:1}"; do
+    # Append new values with comma
+    command_csv="${command_csv}, \"${i}\""
+  done
 
   # Name will include last item of command, cannot include slashes.
-  NAME="$NAME-${split_command[-1]}"
+  NAME="$NAME-${command_strings[-1]}"
 
-  export COMMAND="[${command}]"
+  export COMMAND="[${command_csv}]"
   export SCHEDULE="${commands[$command]}"
   export NAME=$(echo $NAME | awk '{print tolower($0)}')
 
