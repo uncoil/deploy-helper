@@ -19,7 +19,9 @@ for command in "${!commands[@]}"; do
 
   # Start comma seperated values with first value.
   command_csv="${command_strings[0]}"
-  for i in "${split_command[@]:1}"; do
+
+  # `:1` -- Start loop at second value.
+  for i in "${command_strings[@]:1}"; do
     # Append new values with comma.
     command_csv="${command_csv}, \"${i}\""
   done
