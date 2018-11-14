@@ -1,26 +1,35 @@
 #! /bin/bash
-JOB_TEMPLATE="/deploy/kubernetes/cron.job.template.yaml"
-JOB_FILE="/deploy/kubernetes/cron.job.yaml"
 
+# NAME, `commands`
 source /deploy/kubernetes/commands.sh && get_commands
 source /deploy/kubernetes_deploy_base.sh
 
-JOB_NAME=$NAME
+JOB_TEMPLATE="/deploy/kubernetes/cron.job.template.yaml"
+TEMPORARY_JOB_FILE="/deploy/kubernetes/cron.job.temporary.yaml"
 
+# PRIMARY_IMAGE
 /deploy/kubernetes_deploy_base.sh
 
-export PRIMARY_IMAGE="${PRIMARY_IMAGE}"
+# `commands` are an associative array -- [COMMAND]=SCHEDULE
 
+# Get all keys, each as a new string: "${!commands[@]}" 
 for command in "${!commands[@]}"; do
-  split_command=($command)
-  formatted_command=\"${split_command[0]}\"
-  for i in "${split_command[@]:1}"; do
-    formatted_command="${formatted_command}, \"${i}\""
+  # Split string into array of strings
+  command_strings=($command)
+
+  # Start comma seperated values with first value.
+  command_csv="${command_strings[0]}"
+
+  # `:1` -- Start loop at second value.
+  for i in "${command_strings[@]:1}"; do
+    # Append new values with comma.
+    command_csv="${command_csv}, \"${i}\""
   done
 
-  NAME="$JOB_NAME-${split_command[2]}"
+  # Name will include last item of command, cannot include slashes.
+  NAME="$NAME-${command_strings[-1]}"
 
-  export COMMAND="[${formatted_command}]"
+  export COMMAND="[${command_csv}]"
   export SCHEDULE="${commands[$command]}"
   export NAME=$(echo $NAME | awk '{print tolower($0)}')
 
@@ -28,11 +37,12 @@ for command in "${!commands[@]}"; do
   echo NAME "$NAME"
   echo SCHEDULE "$SCHEDULE"
   echo PRIMARY_IMAGE "$PRIMARY_IMAGE"
-
-  # Ignore exit code with pipe operator
+  
+  # Delete old jobs.
+  # Ignore exit code with pipe operator.
   kubectl delete cronjob $NAME || true
-
-  /deploy/templater.sh ${JOB_TEMPLATE} > ${JOB_FILE}
-  kubectl apply --record -f ${JOB_FILE}
-  rm ${JOB_FILE}
+  
+  /deploy/templater.sh ${JOB_TEMPLATE} > ${TEMPORARY_JOB_FILE}
+  kubectl apply --record -f ${TEMPORARY_JOB_FILE}
+  rm ${TEMPORARY_JOB_FILE}
 done
