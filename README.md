@@ -33,6 +33,6 @@ Load your project into your editor
   - deployment.template.yaml
   - service.yaml
 
-  Not required:
+  For cronjobs deployments:
   - commands.sh
   - cron.job.template.yaml
