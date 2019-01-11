@@ -23,7 +23,7 @@ Open a new tab, log into the 'strawhousedev' Github account (credentials in the 
 Load your project into your editor
 - Copy the key.aes from the Codeship project settings into the `docker` folder
 - Copy the gcp.env from another project into your `docker` folder
-- `cd docker && jet encrypt gcp.env gcp.env.encrypted --key-path=key.aes && rm gcp.env`
+- From your project root, run `cd docker && jet encrypt gcp.env gcp.env.encrypted --key-path=key.aes && rm gcp.env`
 - Add or create your `dockerfile.app` and `local-compose.yaml` files in the `docker` folder
 - Create `codeship-services.yml` and `codeship-steps.yml` in the project root (see other repositories for examples)
 - Create a `test.sh` at the root of your project, this script will be responsible for setting up and running your project's test suite.
