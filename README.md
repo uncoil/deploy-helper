@@ -14,11 +14,10 @@ Open a new tab, log into the 'strawhousedev' Github account (credentials in the 
 - Go to your project repository on github.com
 - hit the settings tab on the near the top right 
 - hit 'Deploy Keys' on the navigation menu
-- hit 'Add Deploy Key' near the top right
-- Add a new entry with the new project key.
+- remove the codeship key that is there (it was added by codeship)
 - Go to the github user settings on the top right
 - Go to SSH and GPG key.
-- Add a new entry with the new project key.
+- Add a new entry with the new project key. Suggested name: `codeship (your-project-name)`
 
 Load your project into your editor
 - Copy the key.aes from the Codeship project settings into the `docker` folder
