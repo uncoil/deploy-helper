@@ -23,7 +23,7 @@ Load your project into your editor
 - Copy the key.aes from the Codeship project settings into the `docker` folder
 - Copy the gcp.env from another project into your `docker` folder
 - From your project root, run `cd docker && jet encrypt gcp.env gcp.env.encrypted --key-path=key.aes && rm gcp.env`
-- Add or create your `dockerfile.app` and `local-compose.yaml` files in the `docker` folder
+- Add or create your `Dockerfile.app` and `local-compose.yaml` files in the `docker` folder
 - Create `codeship-services.yml` and `codeship-steps.yml` in the project root (see other repositories for examples)
 - Create a `test.sh` at the root of your project, this script will be responsible for setting up and running your project's test suite.
 - Create a folder called `kubernetes` in the `docker` folder and add your deployment templates (see other projects for examples):
