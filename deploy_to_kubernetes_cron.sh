@@ -11,10 +11,9 @@ TEMPORARY_JOB_FILE="/deploy/kubernetes/cron.job.temporary.yaml"
 # PRIMARY_IMAGE
 /deploy/kubernetes_deploy_base.sh
 
-# `commands` is an associative array -- [COMMAND]=SCHEDULE
-# `command_names` is an optional associative array for command names -- [COMMAND]=NAME
+# `commands` are an associative array -- [COMMAND]=SCHEDULE
 
-# Get all keys, each as a new string: "${!commands[@]}"
+# Get all keys, each as a new string: "${!commands[@]}" 
 for command in "${!commands[@]}"; do
   # Split string into array of strings
   command_strings=($command)
@@ -28,15 +27,8 @@ for command in "${!commands[@]}"; do
     command_csv="${command_csv}, \"${i}\""
   done
 
-  # Use the command_names value for this command if it was set;
-  # otherwise, use the last token of the command for the name.
-  if [ -z ${command_names[$command]} ]; then
-    # Name will include last item of command, cannot include slashes.
-    NAME="$JOB_NAME-${command_strings[-1]}"
-  else
-    # Use the defined command name
-    NAME="$JOB_NAME-${command_names[$command]}"
-  fi
+  # Name will include last item of command, cannot include slashes.
+  NAME="$JOB_NAME-${command_strings[-1]}"
 
   export COMMAND="[${command_csv}]"
   export SCHEDULE="${commands[$command]}"
@@ -46,11 +38,11 @@ for command in "${!commands[@]}"; do
   echo NAME "$NAME"
   echo SCHEDULE "$SCHEDULE"
   echo PRIMARY_IMAGE "$PRIMARY_IMAGE"
-
+  
   # Delete old jobs.
   # Ignore exit code with pipe operator.
   kubectl delete cronjob $NAME || true
-
+  
   /deploy/templater.sh ${JOB_TEMPLATE} > ${TEMPORARY_JOB_FILE}
   kubectl apply --record -f ${TEMPORARY_JOB_FILE}
   rm ${TEMPORARY_JOB_FILE}
