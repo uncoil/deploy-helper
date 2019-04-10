@@ -25,6 +25,11 @@
 - Go to Settings > Webhooks
 - Add webhooks for slack, and statushero (copy the webhook URLs+configs from another project)
 
+### Setup Codeship notifications
+- Go to your project in Codeship
+- Go to Settings > Notifications
+- Add a Slack notification, copying the settings from another project
+
 ### Final project setup
 - Load your project into your editor
 - Copy the key.aes from the Codeship project settings into the `docker` folder
