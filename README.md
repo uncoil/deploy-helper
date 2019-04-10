@@ -1,6 +1,12 @@
 # docker-ci-submodule
 
-## Steps for Codeship Kubernetes setup
+This project is a collection of docker deployment helper scripts. When creating a new project, follow the steps below to include this project as a submodule and to complete basic setup steps for your project.
+
+### Include deploy-helper as a submodule
+- Copy the URL for this repo with the Clone or download button on Github.com
+- Go into the local directory for your project
+- Create a docker/ directory if you don't already have one
+- Run `git submodule add <git@github.com...> docker/deploy-helper`
 
 ### Create a new project on Codeship
 - https://app.codeship.com/orgs/uncoil/projects/new
