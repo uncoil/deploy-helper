@@ -1,8 +1,8 @@
-## docker-ci-submodule
+# docker-ci-submodule
 
-#### Steps for Codeship Kubernetes setup
+## Steps for Codeship Kubernetes setup
 
-Create a new project on Codeship
+### Create a new project on Codeship
 - https://app.codeship.com/orgs/uncoil/projects/new
 - Select Uncoil for organization and select your project's repository, proceed to the next step
 - Select Pro, complete the setup
@@ -10,7 +10,8 @@ Create a new project on Codeship
 - Hit 'General' on the navigation menu near the top right
 - Under 'Keys', hit the copy button for the SSH Key, keep this tab open
 
-Open a new tab, log into the 'strawhousedev' Github account (credentials in the developer vault of 1pass) 
+### Setup codeship/github deploy key
+- Open a new tab, log into the 'strawhousedev' Github account (credentials in the developer vault of 1pass) 
 - Go to your project repository on github.com
 - hit the settings tab on the near the top right 
 - hit 'Deploy Keys' on the navigation menu
@@ -19,7 +20,13 @@ Open a new tab, log into the 'strawhousedev' Github account (credentials in the 
 - Go to SSH and GPG key.
 - Add a new entry with the new project key. Suggested name: `codeship (your-project-name)`
 
-Load your project into your editor
+### Setup Github webhooks
+- Go to your project on github.com
+- Go to Settings > Webhooks
+- Add webhooks for slack, and statushero (copy the webhook URLs+configs from another project)
+
+### Final project setup
+- Load your project into your editor
 - Copy the key.aes from the Codeship project settings into the `docker` folder
 - Copy the gcp.env from another project into your `docker` folder
 - From your project root, run `cd docker && jet encrypt gcp.env gcp.env.encrypted --key-path=key.aes && rm gcp.env`
