@@ -40,7 +40,7 @@ This project is a collection of docker deployment helper scripts. When creating 
 - Load your project into your editor
 - Copy the key.aes from the Codeship project settings into the `docker` folder
 - Copy the gcp.env from another project into your `docker` folder
-- From your project root, run `cd docker && jet encrypt gcp.env gcp.env.encrypted --key-path=key.aes && rm gcp.env`
+- From your project root, run `cd docker && jet encrypt gcp.env gcp.env.encrypted --key-path=key.aes && rm gcp.env && rm key.aes`
 - Copy `docker/id_github_deployment.rsa` from another project into your `docker` folder
 - Add or create your `Dockerfile.app` and `local-compose.yaml` files in the `docker` folder
 - Create `codeship-services.yml` and `codeship-steps.yml` in the project root (see other repositories for examples)
