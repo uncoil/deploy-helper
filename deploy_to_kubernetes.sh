@@ -9,8 +9,8 @@ echo "Upgrading to $PRIMARY_IMAGE"
 # TODO: testing
 echo "ls -la"
 ls -la
-echo "who"
-who
+echo "whoami"
+whoami
 /deploy/templater.sh /deploy/kubernetes/deployment.template.yaml > deployment.yaml
 
 echo "Applying new deployment"
