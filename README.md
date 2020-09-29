@@ -14,32 +14,18 @@ This project is a collection of docker deployment helper scripts. When creating 
 - https://app.codeship.com/orgs/uncoil/projects/new
 - Select Uncoil for organization and select your project's repository, proceed to the next step
 - Select Pro, complete the setup
-- You should be at 'What's next?', if not, find your project's settings.
-- Hit 'General' on the navigation menu near the top right
-- Under 'Keys', hit the copy button for the SSH Key, keep this tab open
-
-### Setup codeship/github deploy key
-
-- Open a new tab, log into the 'strawhousedev' Github account (credentials in the developer vault of 1pass)
-- Go to your project repository on github.com
-- hit the settings tab on the near the top right
-- hit 'Deploy Keys' on the navigation menu
-- remove the codeship key that is there (it was added by codeship)
-- Go to the github user settings on the top right
-- Go to SSH and GPG key.
-- Add a new entry with the new project key. Suggested name: `codeship (your-project-name)`
-
-### Setup Github webhooks
-
-- Go to your project on github.com
-- Go to Settings > Webhooks
-- Add webhooks for slack, and statushero (copy the webhook URLs+configs from another project)
 
 ### Setup Codeship notifications
 
 - Go to your project in Codeship
 - Go to Settings > Notifications
 - Add a Slack notification, copying the settings from another project
+
+### Setup Github webhooks
+
+- Go to your project on github.com
+- Go to Settings > Webhooks
+- Add webhooks for slack, and statushero (copy the webhook URLs+configs from another project)
 
 ### Final project setup
 
