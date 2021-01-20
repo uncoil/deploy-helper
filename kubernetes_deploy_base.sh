@@ -7,12 +7,13 @@ PROJECT_NAME=$GOOGLE_PROJECT_ID
 DEFAULT_ZONE=us-central1-a
 CLUSTER=$CI_BRANCH
 
+echo 'activating service account'
+echo $GOOGLE_AUTH_JSON > /tmp/keyfile.json
+gcloud auth activate-service-account $GOOGLE_AUTH_EMAIL --key-file /tmp/keyfile.json --project $PROJECT_NAME
 echo 'setting project'
 gcloud config set project $PROJECT_NAME
 echo 'setting zone'
 gcloud config set compute/zone $DEFAULT_ZONE
-echo $GOOGLE_AUTH_JSON > /tmp/keyfile.json
-gcloud auth activate-service-account $GOOGLE_AUTH_EMAIL --key-file /tmp/keyfile.json --project $PROJECT_NAME
 
 echo 'setting cluster'
 gcloud config set container/cluster $CLUSTER

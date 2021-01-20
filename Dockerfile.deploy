@@ -1,4 +1,4 @@
-FROM google/cloud-sdk
+FROM gcr.io/google.com/cloudsdktool/cloud-sdk:latest
 
 COPY docker/deploy-helper/deploy_to_kubernetes.sh /deploy/deploy_to_kubernetes.sh
 COPY docker/deploy-helper/kubernetes_deploy_base.sh /deploy/kubernetes_deploy_base.sh
