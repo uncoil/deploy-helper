@@ -1,4 +1,4 @@
-FROM google/cloud-sdk
+FROM google/cloud-sdk:323.0.0
 
 COPY docker/deploy-helper/deploy_to_kubernetes.sh /deploy/deploy_to_kubernetes.sh
 COPY docker/deploy-helper/kubernetes_deploy_base.sh /deploy/kubernetes_deploy_base.sh
