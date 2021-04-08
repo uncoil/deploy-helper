@@ -37,6 +37,7 @@ This project is a collection of docker deployment helper scripts. When creating 
 - Add or create your `Dockerfile.app` and `local-compose.yaml` files in the `docker` folder
 - Create `codeship-services.yml` and `codeship-steps.yml` in the project root (see other repositories for examples)
 - Create a `test.sh` at the root of your project, this script will be responsible for setting up and running your project's test suite.
+- Follow the install instruction to install our eslint-prettier plugin https://github.com/uncoil/eslint-config-uncoil
 - Create a folder called `kubernetes` in the `docker` folder and add your deployment templates (see other projects for examples):
 
   - configmap.production.yaml
